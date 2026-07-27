@@ -1,0 +1,54 @@
+/* Style de la carte QGIS2Web - ASEDGE */
+html, body, #map {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #10233d;
+  color: #f4f7fb;
+  border-radius: 8px;
+}
+
+.leaflet-popup-content h3 {
+  margin: 0 0 0.3rem;
+  color: #4fd8cf;
+  font-size: 0.95rem;
+}
+
+.leaflet-popup-content p {
+  margin: 0.15rem 0;
+  font-size: 0.85rem;
+}
+
+.leaflet-popup-tip {
+  background: #10233d;
+}
+
+.map-legend {
+  background: rgba(11, 27, 48, 0.9);
+  color: #f4f7fb;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.map-legend .legend-title {
+  font-weight: 700;
+  color: #4fd8cf;
+  margin-bottom: 0.3rem;
+}
+
+.map-legend .legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4fd8cf;
+  border: 2px solid #1f7ae0;
+  margin-right: 0.4rem;
+}

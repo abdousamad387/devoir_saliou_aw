@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carte ASEDGE - Sites d'intervention (export QGIS2Web)</title>
+<link rel="stylesheet" href="leaflet/leaflet.css">
+<link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+<div id="map"></div>
+
+<script src="leaflet/leaflet.js"></script>
+<script src="data/sites_asedge.js"></script>
+<script>
+  // Reproduit la logique générée par QGIS2Web : création de la carte,
+  // fonds de plan, ajout de la couche vectorielle GeoJSON et des popups.
+  var map = L.map('map', { fullscreenControl: false });
+
+  var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 19
+  });
+
+  var darkBasemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+    maxZoom: 19
+  });
+
+  darkBasemap.addTo(map);
+
+  function styleSites() {
+    return {
+      radius: 8,
+      fillColor: '#4fd8cf',
+      color: '#1f7ae0',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.9
+    };
+  }
+
+  var sitesLayer = L.geoJson(json_sitesasedge_1, {
+    pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, styleSites());
+    },
+    onEachFeature: function (feature, layer) {
+      var p = feature.properties;
+      layer.bindPopup(
+        '<h3>' + p.nom + '</h3>' +
+        '<p><strong>Intervention :</strong> ' + p.type + '</p>' +
+        '<p><strong>Année :</strong> ' + p.annee + '</p>'
+      );
+    }
+  }).addTo(map);
+
+  map.fitBounds(sitesLayer.getBounds(), { padding: [30, 30] });
+
+  L.control.layers(
+    { "Fond sombre": darkBasemap, "OpenStreetMap": osm },
+    { "Sites ASEDGE": sitesLayer }
+  ).addTo(map);
+
+  var legend = L.control({ position: 'bottomright' });
+  legend.onAdd = function () {
+    var div = L.DomUtil.create('div', 'map-legend');
+    div.innerHTML =
+      '<div class="legend-title">Légende</div>' +
+      '<span class="legend-dot"></span> Site d\'intervention ASEDGE';
+    return div;
+  };
+  legend.addTo(map);
+</script>
+</body>
+</html>
